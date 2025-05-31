@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>Document</title>
+</head>
+
+<body>
+  <div id="thankYouModal" style="display:none;position:fixed;z-index:9999;top:0;left:0;width:100vw;height:100vh;background:rgba(255,182,213,0.85);backdrop-filter:blur(2px);justify-content:center;align-items:center;">
+    <div style="background:#fff0f6;border-radius:18px;box-shadow:0 8px 32px 0 rgba(255,182,213,0.25);padding:32px 24px 24px 24px;max-width:320px;text-align:center;">
+      <div style="font-size:2.5em;margin-bottom:10px;">💖🕊️</div>
+      <h2 style="color:#d72660;margin-bottom:10px;">Thank You!</h2>
+      <p style="color:#b23a48;font-size:1.1em;margin-bottom:18px;">
+        Don't worry, Queen. The Complaint has been sent sucessfully.<br>
+        Your Paani puri will fix the issue as soon as possible💝<br>
+        You can submit another grievance anytime.
+      </p>
+      <button onclick="closeThankYou()" style="background:linear-gradient(90deg,#ffb6d5 0%,#d72660 100%);color:#fff;border:none;border-radius:8px;padding:12px 0;width:100%;font-size:1.1em;font-weight:bold;letter-spacing:0.05em;cursor:pointer;box-shadow:0 2px 8px 0 rgba(215,38,96,0.10);transition:background 0.2s,transform 0.1s;">Back to Form</button>
+    </div>
+  </div>
+
+  <form id="grievanceForm" style="max-width:400px;margin:auto;">
+    <!-- Emergency Type -->
+    <label for="urgency">Is this an emergency?</label>
+    <select id="urgency" name="urgency" required>
+      <option value="" disabled selected>Select</option>
+      <option value="Emergency">Emergency</option>
+      <option value="Non-Emergency">Non-Emergency</option>
+    </select>
+    <br><br>
+
+    <!-- Complaint Title -->
+    <label for="title">Title</label>
+    <input type="text" id="title" name="title" placeholder="Short title" required>
+    <br><br>
+
+    <!-- What's bothering you? -->
+    <label for="bothering">What's bothering you?</label>
+    <textarea id="bothering" name="bothering" placeholder="Describe your issue" required></textarea>
+    <br><br>
+
+    <!-- Mood -->
+    <label for="mood">How do you feel?</label>
+    <select id="mood" name="mood" required>
+      <option value="" disabled selected>Select mood</option>
+      <option value="Angry">😡 Angry</option>
+      <option value="Sad">😢 Sad</option>
+      <option value="Frustrated">😣 Frustrated</option>
+      <option value="Worried">😟 Worried</option>
+      <option value="Disappointed">😞 Disappointed</option>
+      <option value="Confused">😕 Confused</option>
+      <option value="Hopeless">😔 Hopeless</option>
+      <option value="Other">💬 Other</option>
+    </select>
+    <br><br>
+
+    <!-- What might fix the issue -->
+    <label for="fix">What might fix the issue?</label>
+    <textarea id="fix" name="fix" placeholder="Your suggestion" required></textarea>
+    <br><br>
+
+    <!-- Submit -->
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    function closeThankYou() {
+      document.getElementById('thankYouModal').style.display = 'none';
+      document.getElementById('grievanceForm').style.display = 'block';
+    }
+
+    const tg = {
+      token: "7624714336:AAFutNw0sSWhv-v9oNxOr9Iv6yPZGFJzBLM",
+      chat_id: "1399454496"
+    };
+    document.getElementById('grievanceForm').onsubmit = async function(e) {
+      e.preventDefault();
+      const urgency = this.urgency.value;
+      const title = this.title.value;
+      const bothering = this.bothering.value;
+      const mood = this.mood.value;
+      const fix = this.fix.value;
+
+      const text =
+        `New Grievance:\n` +
+        `Urgency: ${urgency}\n` +
+        `Title: ${title}\n` +
+        `What's bothering you?: ${bothering}\n` +
+        `Mood: ${mood}\n` +
+        `What might fix the issue?: ${fix}`;
+
+      await fetch(`https://api.telegram.org/bot${tg.token}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ chat_id: tg.chat_id, text })
+      });
+
+      this.reset();
+      document.getElementById('grievanceForm').style.display = 'none';
+      document.getElementById('thankYouModal').style.display = 'flex';
+    };
+  </script>
+
+  <style>
+body {
+  background: linear-gradient(135deg, #ffe0ec 0%, #ffb6d5 100%);
+  font-family: 'Segoe UI', 'Arial', sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  -webkit-tap-highlight-color: transparent;
+}
+
+form#grievanceForm {
+  background: #fff0f6;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px 0 rgba(255, 182, 213, 0.25);
+  padding: 24px 8px 16px 8px;
+  margin: 32px auto;
+  border: 2px solid #ffb6d5;
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+}
+
+form#grievanceForm label {
+  color: #d72660;
+  font-weight: 600;
+  font-size: 1.08em;
+  margin-bottom: 6px;
+  display: block;
+  letter-spacing: 0.02em;
+}
+
+form#grievanceForm input[type="text"],
+form#grievanceForm textarea,
+form#grievanceForm select {
+  width: 100%;
+  padding: 12px 14px;
+  margin-top: 4px;
+  margin-bottom: 18px;
+  border: 1.5px solid #ffb6d5;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 1.05em;
+  color: #d72660;
+  transition: border 0.2s;
+  box-sizing: border-box;
+  outline: none;
+}
+
+form#grievanceForm input[type="text"]:focus,
+form#grievanceForm textarea:focus,
+form#grievanceForm select:focus {
+  border: 2px solid #d72660;
+  background: #ffe0ec;
+}
+
+form#grievanceForm textarea {
+  min-height: 60px;
+  resize: vertical;
+  font-size: 1.05em;
+}
+
+form#grievanceForm button[type="submit"] {
+  background: linear-gradient(90deg, #ffb6d5 0%, #d72660 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 14px 0;
+  width: 100%;
+  font-size: 1.15em;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  box-shadow: 0 2px 8px 0 rgba(215, 38, 96, 0.10);
+  transition: background 0.2s, transform 0.1s;
+  margin-top: 10px;
+}
+
+form#grievanceForm button[type="submit"]:hover,
+form#grievanceForm button[type="submit"]:active {
+  background: linear-gradient(90deg, #d72660 0%, #ffb6d5 100%);
+  transform: translateY(-2px) scale(1.03);
+}
+
+@media (max-width: 500px) {
+  body {
+    font-size: 1em;
+  }
+  form#grievanceForm {
+    padding: 12px 2vw 10px 2vw;
+    margin: 12px 0;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px 0 rgba(255, 182, 213, 0.18);
+  }
+  form#grievanceForm label {
+    font-size: 1em;
+  }
+  form#grievanceForm input[type="text"],
+  form#grievanceForm textarea,
+  form#grievanceForm select {
+    font-size: 1em;
+    padding: 10px 8px;
+  }
+  form#grievanceForm button[type="submit"] {
+    font-size: 1em;
+    padding: 12px 0;
+  }
+}
+</style>
+</body>
+
+
+</html></body>
+</html>
