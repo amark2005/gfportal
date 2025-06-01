@@ -2,24 +2,211 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grievance Portal</title>
+    <style>
+body {
+  background: radial-gradient(ellipse at top left, #ff4fa3 0%, #1a1a1a 60%, #000 100%);
+  font-family: 'Segoe UI', 'Arial', sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  -webkit-tap-highlight-color: transparent;
+  color: #fff;
+}
+#thankYouModal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(30,10,30,0.92);
+  backdrop-filter: blur(3px);
+  justify-content: center;
+  align-items: center;
+}
+#thankYouModal > div {
+  background: rgba(30, 10, 30, 0.98);
+  border-radius: 22px;
+  box-shadow: 0 0 32px 8px #ff4fa355, 0 0 0 4px #ff4fa320;
+  padding: 36px 24px 28px 24px;
+  max-width: 340px;
+  text-align: center;
+  border: 2.5px solid #ff4fa3;
+  position: relative;
+}
+#thankYouModal h2 {
+  color: #ff4fa3;
+  margin-bottom: 10px;
+  font-size: 1.5em;
+  letter-spacing: 0.04em;
+  text-shadow: 0 0 16px #ff4fa3cc, 0 0 2px #fff;
+}
+#thankYouModal p {
+  color: #ffe0f7;
+  font-size: 1.1em;
+  margin-bottom: 18px;
+  line-height: 1.6;
+  text-shadow: 0 0 8px #ff4fa355;
+}
+#thankYouModal button {
+  background: linear-gradient(90deg, #ff4fa3 0%, #ffb6d5 100%);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 0;
+  width: 100%;
+  font-size: 1.15em;
+  font-weight: bold;
+  letter-spacing: 0.07em;
+  cursor: pointer;
+  box-shadow: 0 0 18px 2px #ff4fa388, 0 2px 8px 0 #0008;
+  transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+  margin-top: 16px;
+  text-shadow: 0 0 8px #ff4fa3cc;
+  position: relative;
+  z-index: 1;
+}
+#thankYouModal button:hover,
+#thankYouModal button:active {
+  background: linear-gradient(90deg, #ffb6d5 0%, #ff4fa3 100%);
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 0 32px 6px #ff4fa3cc, 0 2px 8px 0 #000a;
+}
+#thankYouModal .glow-heart {
+  font-size: 2.5em;
+  color: #ff4fa3;
+  text-shadow:
+    0 0 18px #ff4fa3cc,
+    0 0 32px #ff4fa3aa,
+    0 0 2px #fff;
+  margin-bottom: 10px;
+  display: inline-block;
+  animation: pulseHeart 1.5s infinite;
+  position: relative;
+}
+form#grievanceForm {
+  background: rgba(20, 20, 30, 0.96);
+  border-radius: 22px;
+  box-shadow: 0 0 32px 8px #ff4fa355, 0 0 0 4px #ff4fa320;
+  padding: 36px 18px 28px 18px;
+  margin: 48px auto;
+  border: 2.5px solid #ff4fa3;
+  width: 100%;
+  max-width: 420px;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+}
+form#grievanceForm label {
+  color: #ff4fa3;
+  font-weight: 600;
+  font-size: 1.08em;
+  margin-bottom: 6px;
+  display: block;
+  letter-spacing: 0.02em;
+  text-shadow: 0 0 8px #ff4fa355;
+}
+form#grievanceForm input[type="text"],
+form#grievanceForm textarea,
+form#grievanceForm select {
+  width: 100%;
+  padding: 12px 14px;
+  margin-top: 4px;
+  margin-bottom: 18px;
+  border: 1.5px solid #ff4fa3;
+  border-radius: 10px;
+  background: #18141c;
+  font-size: 1.05em;
+  color: #ffb6d5;
+  transition: border 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+  outline: none;
+  box-shadow: 0 0 8px 0 #ff4fa344 inset;
+}
+form#grievanceForm input[type="text"]:focus,
+form#grievanceForm textarea:focus,
+form#grievanceForm select:focus {
+  border: 2px solid #ffb6d5;
+  background: #221a26;
+  box-shadow: 0 0 16px 2px #ff4fa3cc;
+}
+form#grievanceForm textarea {
+  min-height: 60px;
+  resize: vertical;
+  font-size: 1.05em;
+}
+form#grievanceForm button[type="submit"] {
+  background: linear-gradient(90deg, #ff4fa3 0%, #ffb6d5 100%);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 0;
+  width: 100%;
+  font-size: 1.15em;
+  font-weight: bold;
+  letter-spacing: 0.07em;
+  cursor: pointer;
+  box-shadow: 0 0 18px 2px #ff4fa388, 0 2px 8px 0 #0008;
+  transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+  margin-top: 10px;
+  text-shadow: 0 0 8px #ff4fa3cc;
+  position: relative;
+  z-index: 1;
+}
+form#grievanceForm button[type="submit"]:hover,
+form#grievanceForm button[type="submit"]:active {
+  background: linear-gradient(90deg, #ffb6d5 0%, #ff4fa3 100%);
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 0 32px 6px #ff4fa3cc, 0 2px 8px 0 #000a;
+}
+@keyframes pulseHeart {
+  0%, 100% { transform: scale(1);}
+  50% { transform: scale(1.12);}
+}
+@media (max-width: 500px) {
+  body {
+    font-size: 1em;
+  }
+  form#grievanceForm {
+    padding: 14px 2vw 10px 2vw;
+    margin: 12px 0;
+    border-radius: 14px;
+  }
+  form#grievanceForm label {
+    font-size: 1em;
+  }
+  form#grievanceForm input[type="text"],
+  form#grievanceForm textarea,
+  form#grievanceForm select {
+    font-size: 1em;
+    padding: 10px 8px;
+  }
+  form#grievanceForm button[type="submit"] {
+    font-size: 1em;
+    padding: 12px 0;
+  }
+  #thankYouModal > div {
+    padding: 18px 4vw 16px 4vw;
+    border-radius: 14px;
+  }
+}
+    </style>
 </head>
-
 <body>
-  <div id="thankYouModal" style="display:none;position:fixed;z-index:9999;top:0;left:0;width:100vw;height:100vh;background:rgba(255,182,213,0.85);backdrop-filter:blur(2px);justify-content:center;align-items:center;">
-    <div style="background:#fff0f6;border-radius:18px;box-shadow:0 8px 32px 0 rgba(255,182,213,0.25);padding:32px 24px 24px 24px;max-width:320px;text-align:center;">
-      <div style="font-size:2.5em;margin-bottom:10px;">💖🕊️</div>
-      <h2 style="color:#d72660;margin-bottom:10px;">Thank You!</h2>
-      <p style="color:#b23a48;font-size:1.1em;margin-bottom:18px;">
-        Don't worry, Queen. The Complaint has been sent sucessfully.<br>
-        Your Paani puri will fix the issue as soon as possible💝<br>
+  <div id="thankYouModal">
+    <div>
+      <div class="glow-heart">🖤</div>
+      <h2>Thank You!</h2>
+      <p>
+        Don't worry, Queen. The Complaint has been sent successfully.<br>
+        Your Pani puri will fix the issue as soon as possible 💝<br>
         You can submit another grievance anytime.
       </p>
-      <button onclick="closeThankYou()" style="background:linear-gradient(90deg,#ffb6d5 0%,#d72660 100%);color:#fff;border:none;border-radius:8px;padding:12px 0;width:100%;font-size:1.1em;font-weight:bold;letter-spacing:0.05em;cursor:pointer;box-shadow:0 2px 8px 0 rgba(215,38,96,0.10);transition:background 0.2s,transform 0.1s;">Back to Form</button>
+      <button onclick="closeThankYou()">Back to Form</button>
     </div>
   </div>
 
-  <form id="grievanceForm" style="max-width:400px;margin:auto;">
+  <form id="grievanceForm">
     <!-- Emergency Type -->
     <label for="urgency">Is this an emergency?</label>
     <select id="urgency" name="urgency" required>
@@ -100,116 +287,5 @@
       document.getElementById('thankYouModal').style.display = 'flex';
     };
   </script>
-
-  <style>
-body {
-  background: linear-gradient(135deg, #ffe0ec 0%, #ffb6d5 100%);
-  font-family: 'Segoe UI', 'Arial', sans-serif;
-  margin: 0;
-  min-height: 100vh;
-  -webkit-tap-highlight-color: transparent;
-}
-
-form#grievanceForm {
-  background: #fff0f6;
-  border-radius: 18px;
-  box-shadow: 0 8px 32px 0 rgba(255, 182, 213, 0.25);
-  padding: 24px 8px 16px 8px;
-  margin: 32px auto;
-  border: 2px solid #ffb6d5;
-  width: 100%;
-  max-width: 400px;
-  box-sizing: border-box;
-}
-
-form#grievanceForm label {
-  color: #d72660;
-  font-weight: 600;
-  font-size: 1.08em;
-  margin-bottom: 6px;
-  display: block;
-  letter-spacing: 0.02em;
-}
-
-form#grievanceForm input[type="text"],
-form#grievanceForm textarea,
-form#grievanceForm select {
-  width: 100%;
-  padding: 12px 14px;
-  margin-top: 4px;
-  margin-bottom: 18px;
-  border: 1.5px solid #ffb6d5;
-  border-radius: 8px;
-  background: #fff;
-  font-size: 1.05em;
-  color: #d72660;
-  transition: border 0.2s;
-  box-sizing: border-box;
-  outline: none;
-}
-
-form#grievanceForm input[type="text"]:focus,
-form#grievanceForm textarea:focus,
-form#grievanceForm select:focus {
-  border: 2px solid #d72660;
-  background: #ffe0ec;
-}
-
-form#grievanceForm textarea {
-  min-height: 60px;
-  resize: vertical;
-  font-size: 1.05em;
-}
-
-form#grievanceForm button[type="submit"] {
-  background: linear-gradient(90deg, #ffb6d5 0%, #d72660 100%);
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 14px 0;
-  width: 100%;
-  font-size: 1.15em;
-  font-weight: bold;
-  letter-spacing: 0.05em;
-  cursor: pointer;
-  box-shadow: 0 2px 8px 0 rgba(215, 38, 96, 0.10);
-  transition: background 0.2s, transform 0.1s;
-  margin-top: 10px;
-}
-
-form#grievanceForm button[type="submit"]:hover,
-form#grievanceForm button[type="submit"]:active {
-  background: linear-gradient(90deg, #d72660 0%, #ffb6d5 100%);
-  transform: translateY(-2px) scale(1.03);
-}
-
-@media (max-width: 500px) {
-  body {
-    font-size: 1em;
-  }
-  form#grievanceForm {
-    padding: 12px 2vw 10px 2vw;
-    margin: 12px 0;
-    border-radius: 12px;
-    box-shadow: 0 4px 16px 0 rgba(255, 182, 213, 0.18);
-  }
-  form#grievanceForm label {
-    font-size: 1em;
-  }
-  form#grievanceForm input[type="text"],
-  form#grievanceForm textarea,
-  form#grievanceForm select {
-    font-size: 1em;
-    padding: 10px 8px;
-  }
-  form#grievanceForm button[type="submit"] {
-    font-size: 1em;
-    padding: 12px 0;
-  }
-}
-</style>
 </body>
-
-
-</html></body>
 </html>

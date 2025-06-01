@@ -6,61 +6,104 @@
     <title>Grievance Portal</title>
     <style>
       body {
-        background: linear-gradient(135deg, #ffe0ec 0%, #ffb6d5 100%);
+        background: radial-gradient(ellipse at top left, #ff4fa3 0%, #1a1a1a 60%, #000 100%);
         font-family: 'Segoe UI', 'Arial', sans-serif;
         margin: 0;
         min-height: 100vh;
         -webkit-tap-highlight-color: transparent;
+        color: #fff;
       }
       .welcome-container {
-        max-width: 400px;
-        margin: 40px auto 0 auto;
-        background: #fff0f6;
-        border-radius: 18px;
-        box-shadow: 0 8px 32px 0 rgba(255, 182, 213, 0.25);
-        border: 2px solid #ffb6d5;
-        padding: 32px 20px 24px 20px;
+        max-width: 420px;
+        margin: 60px auto 0 auto;
+        background: rgba(20, 20, 30, 0.96);
+        border-radius: 22px;
+        box-shadow: 0 0 32px 8px #ff4fa355, 0 0 0 4px #ff4fa320;
+        border: 2.5px solid #ff4fa3;
+        padding: 40px 24px 32px 24px;
         text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .welcome-container::before {
+        content: "";
+        position: absolute;
+        top: -60px; left: 50%;
+        transform: translateX(-50%);
+        width: 180px; height: 180px;
+        background: radial-gradient(circle, #ff4fa3 0%, transparent 70%);
+        opacity: 0.18;
+        z-index: 0;
+        pointer-events: none;
       }
       .welcome-container h1 {
-        color: #d72660;
-        margin-bottom: 10px;
-        font-size: 2em;
-        letter-spacing: 0.03em;
+        color: #ff4fa3;
+        margin-bottom: 14px;
+        font-size: 2.2em;
+        letter-spacing: 0.04em;
+        text-shadow: 0 0 16px #ff4fa3cc, 0 0 2px #fff;
+        position: relative;
+        z-index: 1;
       }
       .welcome-container p {
-        color: #b23a48;
-        font-size: 1.1em;
-        margin-bottom: 24px;
+        color: #ffe0f7;
+        font-size: 1.18em;
+        margin-bottom: 28px;
+        line-height: 1.6;
+        text-shadow: 0 0 8px #ff4fa355;
+        position: relative;
+        z-index: 1;
       }
       .welcome-container button {
-        background: linear-gradient(90deg, #ffb6d5 0%, #d72660 100%);
+        background: linear-gradient(90deg, #ff4fa3 0%, #ffb6d5 100%);
         color: #fff;
         border: none;
-        border-radius: 8px;
-        padding: 14px 0;
+        border-radius: 10px;
+        padding: 16px 0;
         width: 100%;
-        font-size: 1.15em;
+        font-size: 1.18em;
         font-weight: bold;
-        letter-spacing: 0.05em;
+        letter-spacing: 0.07em;
         cursor: pointer;
-        box-shadow: 0 2px 8px 0 rgba(215, 38, 96, 0.10);
-        transition: background 0.2s, transform 0.1s;
-        margin-top: 10px;
+        box-shadow: 0 0 18px 2px #ff4fa388, 0 2px 8px 0 #0008;
+        transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+        margin-top: 16px;
+        text-shadow: 0 0 8px #ff4fa3cc;
+        position: relative;
+        z-index: 1;
       }
       .welcome-container button:hover,
       .welcome-container button:active {
-        background: linear-gradient(90deg, #d72660 0%, #ffb6d5 100%);
-        transform: translateY(-2px) scale(1.03);
+        background: linear-gradient(90deg, #ffb6d5 0%, #ff4fa3 100%);
+        transform: translateY(-2px) scale(1.04);
+        box-shadow: 0 0 32px 6px #ff4fa3cc, 0 2px 8px 0 #000a;
+      }
+      /* Pink glowing heart accent */
+      .glow-heart {
+        font-size: 2.6em;
+        color: #ff4fa3;
+        text-shadow:
+          0 0 18px #ff4fa3cc,
+          0 0 32px #ff4fa3aa,
+          0 0 2px #fff;
+        margin-bottom: 10px;
+        display: inline-block;
+        animation: pulseHeart 1.5s infinite;
+        position: relative;
+        z-index: 1;
+      }
+      @keyframes pulseHeart {
+        0%, 100% { transform: scale(1);}
+        50% { transform: scale(1.12);}
       }
       @media (max-width: 500px) {
         .welcome-container {
-          padding: 18px 6vw 16px 6vw;
+          padding: 18px 4vw 16px 4vw;
           margin: 18px 0 0 0;
-          border-radius: 12px;
+          border-radius: 14px;
         }
         .welcome-container h1 {
-          font-size: 1.4em;
+          font-size: 1.3em;
         }
         .welcome-container p {
           font-size: 1em;
@@ -69,15 +112,21 @@
           font-size: 1em;
           padding: 12px 0;
         }
+        .glow-heart {
+          font-size: 2em;
+        }
       }
     </style>
 </head>
 <body>
   <div class="welcome-container" id="welcomeForm">
-    <h1>Welcome, Reshma! 💖</h1>
+    <span class="glow-heart">🖤</span>
+    <h1>Welcome, Reshma!</h1>
     <p>
+      What we share is true, boundless, and beyond this world.<br>
       This is your safe space to share your feelings and grievances.<br>
-      <br>Your man here to rescue you from all your worries💕
+      <br>
+      <span style="color:#ff4fa3;font-weight:bold;">Your man is here to rescue you from all your worries.</span> <span style="font-size:1.3em;">💕</span>
     </p>
     <button onclick="window.location.href='main.html'">Start</button>
   </div>
